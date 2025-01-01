@@ -7,7 +7,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*", // Allow all origins (update this to your frontend URL after deployment)
+    origin: "https://hushes-frontend.vercel.app",
     methods: ["GET", "POST"],
   },
 });
