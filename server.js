@@ -1,4 +1,3 @@
-const path = require("path"); // Add this line
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
@@ -6,17 +5,15 @@ const { v4: uuidv4 } = require("uuid");
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "*", // Allow all origins (update this to your frontend URL after deployment)
+    methods: ["GET", "POST"],
+  },
+});
 
 let rooms = {};
 let roomTimers = {};
-
-app.use(express.static(path.join(__dirname, "../hushes-frontend/public")));
-
-// Handle all other routes by serving index.html
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../hushes-frontend/public/index.html"));
-});
 
 io.on("connection", (socket) => {
   console.log("A user connected");
